@@ -18,21 +18,25 @@ window.title("DMV Warrant Lookup")
 def licenseSearch():
     #Step 4.1: Make a temp var for holding in Labels later
     tempVar = entry.get()
-    #Step 4.2: put the database information into variables for easier access later
-    licenseOwner = database[tempVar][0]
-    warrantsOwner = database[tempVar][1]
-    #Step 4.3: make the labels that print  
-    nameLabel = tk.Label(window, text="Naperville Trouble Maker: " + licenseOwner)
-    nameLabel.pack()
-    warrantLabel = tk.Label(window, text="Outstanding Warrants: " + str(warrantsOwner))
-    warrantLabel.pack()
-    if int(warrantsOwner) > 0:
-        warningLabel = tk.Label(window, text="Pull this person over immediately and arrest them!")
-        warningLabel.pack()
-    elif warrantsOwner == 0:
-        niceLabel = tk.Label(window, text="They are ok and have no warrants.")
-        niceLabel.pack()
-
+    try:
+        #Step 4.2: put the database information into variables for easier access later
+        licenseOwner = database[tempVar][0]
+        warrantsOwner = database[tempVar][1]
+        #Step 4.3: make the labels that print  
+        nameLabel = tk.Label(window, text="Naperville Trouble Maker: " + licenseOwner)
+        nameLabel.pack()
+        warrantLabel = tk.Label(window, text="Outstanding Warrants: " + str(warrantsOwner))
+        warrantLabel.pack()
+        if int(warrantsOwner) > 0:
+            warningLabel = tk.Label(window, text="Pull this person over immediately and arrest them!")
+            warningLabel.pack()
+        elif warrantsOwner == 0:
+            niceLabel = tk.Label(window, text="They are ok and have no warrants.")
+            niceLabel.pack()
+    except:
+        failLabel = tk.Label(window, text="Sorry that doesnt exist in the database please enter a valid License Plate")
+        failLabel.pack()
+        
 #Step 5: Make the function that adds the new license plate to the database
 def addLicense():
     database[licensePlate.get()] = (name.get(), warrantsNum.get())
